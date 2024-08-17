@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rol-deploy
+spec:
+  template:
+    metadata:
+      name: rol-pod
+      labels:
+        type: rol
+    spec:
+      containers:
+        - image: nginx:1.27.0-alpine-perl
+          name: nginxc1
+  replicas: 3
+  selector:
+    matchLabels:
+      type: rol
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 2
